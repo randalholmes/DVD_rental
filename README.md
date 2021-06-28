@@ -1,0 +1,3 @@
+# DVD_rental
+A demo/practice React application utilizing REST APIs and a Postgres DVD Rental Store sample database.
+testing.....
