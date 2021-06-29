@@ -1,0 +1,19 @@
+
+.movies-search-form {
+    border: 2px solid black;
+    width: 300px;
+    padding: 6px;
+    height: 350px;
+}
+
+.movies-search-form div {
+    margin: 12px;
+}
+
+.movies-search-form label {
+    margin-right: 6px;
+}
+
+.movies-search-form h2 {
+    text-align: center;
+}

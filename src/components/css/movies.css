@@ -1,0 +1,9 @@
+
+.movies {
+
+    height: 700px;
+    background-color: cornsilk;
+    padding: 20px;
+    display: flex;
+}
+

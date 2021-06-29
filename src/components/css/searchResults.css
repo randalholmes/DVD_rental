@@ -1,0 +1,54 @@
+
+
+.search_results {
+    border: 2px solid black;
+    margin-left: 12px;
+}
+
+.search_results span {
+    margin-left: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+button {
+    margin-right: 8px;
+    margin-bottom: 2px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.scroll_table {
+    height: 600px;
+    overflow: auto;
+}
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+.selected {
+    background-color: cornflowerblue;
+}
+
+thead th {
+    top: 0px;
+    position: sticky;
+    z-index: 10;
+    background-color:burlywood;
+}
+
+tbody tr:hover {
+    /* background-color: blanchedalmond; */
+    cursor:pointer;
+}
