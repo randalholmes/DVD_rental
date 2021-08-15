@@ -1,4 +1,6 @@
 
+// A container component that can be dragged around the screen within
+// its parent container's bounds. Useful for popup draggable boxes.
 
 
 import './css/dragbox.css'
