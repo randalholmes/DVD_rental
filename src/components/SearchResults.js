@@ -4,7 +4,7 @@
 
 import './css/searchResults.css'
 
-const SearchResults = ({ movies, selectedMovieId, setSelectedMovieId, setShowDetails }) => {
+const SearchResults = ({ movies, selectedMovieId, setSelectedMovieId, setShowDetails, setShowEdit }) => {
 
 
     const selectRow = (e) => {
@@ -19,7 +19,7 @@ const SearchResults = ({ movies, selectedMovieId, setSelectedMovieId, setShowDet
     }
 
     const showEditBox = () => {
-        alert("Edit")
+        setShowEdit(true)
     }
 
 
