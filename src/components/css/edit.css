@@ -1,8 +1,21 @@
 
-.movie-edit div {
+.movie-edit-form div {
     margin: 12px;
 }
 
-.movie-edit label {
+.movie-edit-form label {
     margin-right: 6px;
+}
+
+
+.movie-edit-form #title {
+    width: 300px;
+}
+
+.movie-edit-form #rating {
+    width: 40px;
+}
+
+.movie-edit-form #runTime {
+    width: 40px;
 }

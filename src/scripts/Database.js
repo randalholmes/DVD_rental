@@ -105,8 +105,8 @@ class Database {
             ${likes}
         `
 
-        console.log(likes)
-        console.log('values: ', values)
+        // console.log(likes)
+        // console.log('values: ', values)
 
         return await this.get(query, values)
     }
