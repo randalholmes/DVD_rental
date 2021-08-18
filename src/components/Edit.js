@@ -14,10 +14,36 @@ const Edit = ({ movie }) => {
         console.log("form vals:", formVals)
 
         // Determine what values if any have changed
+        const changedVals = formVals.filter( ([name, value]) => value !== movie[name])
 
+        if (changedVals.length === 0) {
+            alert("No values have changed.")
+            return
+        }
+
+        console.log("changed Vals: ", changedVals)
 
         // Post new values to the database.
+        async function updateMovie() {
+            try {
+                const res = await fetch( "/api/movies/", 
+                {
+                    method:'POST',
+                    headers: {
+                      'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(changedVals)
+                  })
 
+                const data =  await res.json()
+                console.log(data)
+            } catch (err) {
+                console.log(err.message)
+                alert("A problem occured ????.")
+            }
+        }   
+ 
+        updateMovie()
 
 
         // The server will return the new values for the movie.

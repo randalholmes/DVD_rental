@@ -5,6 +5,7 @@ import DataBase from './Database.js'
 import express from 'express'
 
 
+
 // setup database connection
 const db = new DataBase()
 
@@ -46,6 +47,8 @@ process.on('SIGINT', shutdown)
 const app = express();
 const port = 4000;
 
+app.use(express.json()); //Used to parse JSON bodies
+
 
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`)
@@ -53,7 +56,7 @@ app.listen(port, () => {
   
   
 
-// Setup Routes  //
+// Setup GET Routes  //
 
 app.get('/api/movies/category/:category', async (req, res) => {
     const filmList = await db.getMoviesCategory(req.params)
@@ -78,5 +81,11 @@ app.get('/api/category/all', async (req, res) => {
 app.get('/api/actor/all', async (req, res) => {
     const actors = await db.getAllActors()
     res.send(actors)
+});
+
+// Setup POST Routes  //
+
+app.post('/api/movies', async (req, res) => {
+    res.json(req.body)
 });
 
