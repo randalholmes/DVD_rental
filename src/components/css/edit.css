@@ -3,6 +3,12 @@
     margin: 12px;
 }
 
+.movie-edit-form #submit {
+    width: 80px;
+    height: 30px;
+
+}
+
 .movie-edit-form label {
     margin-right: 6px;
 }
@@ -18,4 +24,12 @@
 
 .movie-edit-form #runTime {
     width: 40px;
+}
+
+.movie-edit-form #message-box {
+    color:firebrick;
+    font-size: 16px;
+    margin-left: 20px;
+    
+    
 }

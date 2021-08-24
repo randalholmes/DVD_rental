@@ -17,6 +17,11 @@ const Movies = () => {
     const [selectedMovieId, setSelectedMovieId] = useState(0)
     const [showDetails, setShowDetails] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
+    const [updated, setUpdated] = useState(false)
+
+    // 'updated' is not needed, however 'setUpdated' is used to force a screen redraw
+    // when the Edit-box updates the database. The following shuts ESlint up.
+    if (updated === false) {}  
 
     const closeDetailsBox = () => {
         setShowDetails(false)
@@ -41,7 +46,7 @@ const Movies = () => {
                             setSelectedMovieId={setSelectedMovieId} setShowDetails={setShowDetails}
                             setShowEdit={setShowEdit} /> : ''}
             {showDetails ? <DragBox closeAction={closeDetailsBox} title={"Details"} ><Details movie={selectedMovie} /></DragBox> : ''}
-            {showEdit ? <DragBox closeAction={closeEditBox} title={"Edit"} ><Edit movie={selectedMovie} /></DragBox> : ''}
+            {showEdit ? <DragBox closeAction={closeEditBox} title={"Edit"} ><Edit movie={selectedMovie}  setUpdated={setUpdated} /></DragBox> : ''}
 
         </div>
     )

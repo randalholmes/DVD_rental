@@ -42,7 +42,7 @@ class Database {
     }
 
 
-    async get(text, values=[]) {
+    async execute(text, values=[]) {
         try {
             const client = await this.pool.connect()
             try {
@@ -63,7 +63,7 @@ class Database {
 
 
     async getTime() {
-        const rows = await this.get('SELECT NOW()')
+        const rows = await this.execute('SELECT NOW()')
         return rows[0].now
     }
 
@@ -76,7 +76,7 @@ class Database {
 
         const value = [id];
 
-        return await this.get(query, value);
+        return await this.execute(query, value);
     }
 
     async getMoviesTitle({ title }) {
@@ -108,7 +108,7 @@ class Database {
         // console.log(likes)
         // console.log('values: ', values)
 
-        return await this.get(query, values)
+        return await this.execute(query, values)
     }
 
 
@@ -135,7 +135,7 @@ class Database {
 
         const values = actor.split(' ')
 
-        return await this.get(query, values)
+        return await this.execute(query, values)
     }
 
 
@@ -159,21 +159,51 @@ class Database {
 
         const value = [category]
 
-        return await this.get(query, value)
+        return await this.execute(query, value)
     }
 
 
     async getAllCategories() {
         const query = 'SELECT category_id, name FROM category'
-        return this.get(query)
+        return this.execute(query)
     }
 
 
     async getAllActors() {
         const query = 'SELECT actor_id, first_name, last_name FROM actor'
-        return this.get(query)
+        return this.execute(query)
     }
 
+
+    async updateMovie(data) {
+        const updateData = data.changedVals  // List of columnName/value pairs
+
+        const values = []                    // Values to pass with the query
+        values.push(updateData[0][1])
+
+        // Create a 'SET' string for the update query
+        let colSet = `SET ${updateData[0][0]} = $1`
+
+        for (let i=1; i<updateData.length; ++i) {
+            colSet += `, ${updateData[i][0]} = $${i+1}`
+            values.push(updateData[i][1])
+        }
+
+        values.push(data.film_id)
+
+        const query = `
+        UPDATE film
+
+        ${colSet}
+
+        WHERE film_id = $${updateData.length + 1}
+
+        RETURNING * 
+        `
+        console.log("query: ", query)
+
+        return this.execute(query, values)
+    }
 
 }
 

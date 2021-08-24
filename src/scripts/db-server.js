@@ -86,6 +86,8 @@ app.get('/api/actor/all', async (req, res) => {
 // Setup POST Routes  //
 
 app.post('/api/movies', async (req, res) => {
-    res.json(req.body)
+    console.log("Sent Data: ", req.body)
+    const movie = await db.updateMovie(req.body)
+    res.json(movie[0])
 });
 

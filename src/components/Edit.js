@@ -1,60 +1,72 @@
+// Component for editing information about movies and 
+// submitting the changes to the database.
 
 import './css/edit.css'
 
-const Edit = ({ movie }) => {
-    
+const Edit = ({ movie, setUpdated }) => {
+
+    // Clear the message box when the form is clicked anywhere but the submit button.
+    const formClick = (e) => {
+        if (e.target.type === 'button') return
+        document.getElementById('message-box').innerText = ""
+        setUpdated(false)
+    }
+
+    // Form submit-button handler
     const onSubmit = () => {
+        // Create array of name/value pairs from the form input elements.
         const form = document.querySelector(".movie-edit-form")
-         
-        console.log("form: ", Array.from(form))
+        const formVals = Array.from(form).filter(elm => elm.type !== 'button').map(({ name, value }) => [name, value])
         
-        const formVals = Array.from(form).filter(elm => elm.type !== 'button').map(({ value, name }) => [name, value])
-        
-
-        console.log("form vals:", formVals)
-
         // Determine what values if any have changed
         const changedVals = formVals.filter( ([name, value]) => value !== movie[name])
 
+        const messageElm = document.getElementById('message-box')
+
         if (changedVals.length === 0) {
-            alert("No values have changed.")
+            messageElm.innerText = "No values have changed."
             return
         }
 
-        console.log("changed Vals: ", changedVals)
+        // Create value object to post to the database.
+        const newData = {}
+        newData.changedVals = changedVals
+        newData.film_id = movie.film_id
 
         // Post new values to the database.
         async function updateMovie() {
             try {
                 const res = await fetch( "/api/movies/", 
-                {
+                  {
                     method:'POST',
                     headers: {
                       'Content-type': 'application/json'
                     },
-                    body: JSON.stringify(changedVals)
+                    body: JSON.stringify(newData)
                   })
 
                 const data =  await res.json()
-                console.log(data)
+
+                // The server will return the new values for the movie.
+                // Use those values to update 'movie' object.
+                changedVals.forEach(([ name ]) => movie[name] = data[name])
+
+                document.getElementById('message-box').innerText = "Update successful."
+                setUpdated(true) // Force page redraw with new movie data
+
             } catch (err) {
-                console.log(err.message)
-                alert("A problem occured ????.")
+                document.getElementById('message-box').innerText = "A problem occured. No database update."
             }
         }   
  
-        updateMovie()
-
-
-        // The server will return the new values for the movie.
-        // Use those values to update 'movie' object.
-
-        
+        updateMovie()  
     }
 
+
     return (
-       <form className='movie-edit-form' >
-            <input type="button" value='Submit' onClick={onSubmit} />
+       <form className='movie-edit-form' onClick={(e) => formClick(e)} >
+            <input type="button" id='submit' value='Submit' onClick={onSubmit} />
+            <span id='message-box'></span>
             <br />  
             <br />
             <div>
@@ -78,3 +90,4 @@ const Edit = ({ movie }) => {
 }
 
 export default Edit
+
