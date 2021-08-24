@@ -12,9 +12,19 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
     // Get Categories for category selection box
     useEffect(() => {
         async function getCategories() {
-            const res = await fetch('/api/category/all')
-            const data = await res.json()
-            setCategories(data)
+            try {
+                const res = await fetch('/api/category/all')
+                const data = await res.json()
+
+                if (res.ok) {
+                    setCategories(data)
+                } else {
+                    throw new Error(data.cause)
+                }
+
+            } catch(err) {
+                console.log("Database Error: ", err.message)
+            }
         }
 
         getCategories()
@@ -24,13 +34,25 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
     // Get Actors for actor selection box
     useEffect(() => {
         async function getActors() {
-            const res = await fetch('/api/actor/all')
-            const data = await res.json()
-            setActors(data)
+            try {
+                const res = await fetch('/api/actor/all')
+                const data = await res.json()
+
+                if (res.ok) {
+                    setActors(data)
+                } else {
+                    throw new Error(data.cause)
+                }
+
+            } catch(err) {
+                console.log("Database Error: ", err.message)
+            }
         }
 
         getActors()
     }, [])
+
+
 
 
     // Determine API endpoint based off search item
@@ -67,6 +89,7 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
         const form = document.querySelector(".movies-search-form")
         const searchList = Array.from(form).filter(elm => elm.type !== 'button').map(({ value }) => value.trim() ? value : 'null')
 
+        //const searchList = ["bob", "Sam", "blow"]
         // Get appropriate API endpoint.
         const url = getUrl(searchList, index)
         if (url === 'null') return
@@ -76,8 +99,15 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
             try {
                 const res = await fetch(url)
                 const data =  await res.json()
-                setMovies(data)
-                setSelectedMovieId(0) 
+
+                // console.log({res})
+                if (res.ok) {
+                    setMovies(data)
+                    setSelectedMovieId(0) 
+                } else {
+                    throw new Error(data.cause)
+                }
+
             } catch (err) {
                 console.log(err.message)
                 alert("A problem occured retrieving data from the database.")

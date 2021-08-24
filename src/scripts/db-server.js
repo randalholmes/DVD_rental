@@ -54,28 +54,48 @@ app.listen(port, () => {
 // Setup GET Routes  //
 
 app.get('/api/movies/category/:category', async (req, res) => {
-    const filmList = await db.getMoviesCategory(req.params)
-    res.send(filmList)
+    try {
+        const filmList = await db.getMoviesCategory(req.params)
+        res.send(filmList)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
 });
 
 app.get('/api/movies/title/:title', async (req, res) => {
-    const filmList = await db.getMoviesTitle(req.params)
-    res.send(filmList)
+    try {
+        const filmList = await db.getMoviesTitle(req.params)
+        res.send(filmList)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
 });
 
 app.get('/api/movies/actor/:actor', async (req, res) => {
-    const filmList = await db.getMoviesActor(req.params)
-    res.send(filmList)
+    try {
+        const filmList = await db.getMoviesActor(req.params)
+        res.send(filmList)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
 });
 
 app.get('/api/category/all', async (req, res) => {
-    const categories = await db.getAllCategories()
-    res.send(categories)
+    try {
+        const categories = await db.getAllCategories()
+        res.send(categories)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
 });
 
 app.get('/api/actor/all', async (req, res) => {
-    const actors = await db.getAllActors()
-    res.send(actors)
+    try {
+        const actors = await db.getAllActors()
+        res.send(actors)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
 });
 
 
@@ -83,7 +103,11 @@ app.get('/api/actor/all', async (req, res) => {
 // Setup POST Routes  //
 
 app.post('/api/movies', async (req, res) => {
-    const movie = await db.updateMovie(req.body)
-    res.json(movie[0])
+    try {
+        const movie = await db.updateMovie(req.body)
+        res.send(movie[0])
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }  
 });
 

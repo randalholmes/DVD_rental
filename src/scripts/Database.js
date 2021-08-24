@@ -51,14 +51,14 @@ class Database {
                 const { rows } = await client.query(query, values)
                 return rows
             } catch (err) {
-                console.log(err.stack)
+                //console.log(err.stack)
                 throw err
             
             } finally {
                 client.release()
             }
         } catch (err) {
-            console.log(err)
+            console.log("Database Error: ", err.message)
             throw err
         }
     }
@@ -179,7 +179,7 @@ class Database {
         // Values to pass with the query
         const values = updateData.map(([ , value]) => value)
 
-        // Create a 'SET" statement for use in the query.
+        // Create a 'SET' statement for use in the query.
         const colSet = updateData.map(([name], index) => index ? `, ${name} = $${index+1}` : `SET ${name} = $1`).join("")
 
         // Include movie id with values

@@ -47,13 +47,17 @@ const Edit = ({ movie, setUpdated }) => {
 
                 const data =  await res.json()
 
-                // The server will return the new values for the movie.
-                // Use those values to update 'movie' object.
-                changedVals.forEach(([ name ]) => movie[name] = data[name])
+                if (res.ok) {
+                    // The server will return the new values for the movie.
+                    // Use those values to update 'movie' object.
+                    changedVals.forEach(([ name ]) => movie[name] = data[name])
 
-                document.getElementById('message-box').innerText = "Update successful."
-                setUpdated(true) // Force page redraw with new movie data
-
+                    document.getElementById('message-box').innerText = "Update successful."
+                    setUpdated(true) // Force page redraw with new movie data
+                } else {
+                    console.log("Error: ", data.cause)
+                    throw new Error("Database error.")
+                }
             } catch (err) {
                 document.getElementById('message-box').innerText = "A problem occured. No database update."
             }
