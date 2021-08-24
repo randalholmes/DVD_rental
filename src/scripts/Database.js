@@ -44,11 +44,11 @@ class Database {
 
     // Single access point for executing database queries.
     // Eliminates redundant code.
-    async execute(text, values=[]) {
+    async execute(query, values=[]) {
         try {
             const client = await this.pool.connect()
             try {
-                const { rows } = await client.query(text, values)
+                const { rows } = await client.query(query, values)
                 return rows
             } catch (err) {
                 console.log(err.stack)
@@ -83,14 +83,12 @@ class Database {
 
 
     async getMoviesTitle({ title }) {
-        // Create list of single words with no white space and percent signs to indicate zero or more characters.
+        // Create list of single words with no white space and 
+        // with percent signs to indicate zero or more characters.
         const values = title.split(' ').filter(str => str !== '').map(str => `%${str.trim()}%`)
 
         // Create 'ILIKE' comparison strings for each word in values
-        let likes = 'f.title ILIKE $1'
-        for (let i=2; i<=values.length; ++i) {
-            likes += ` OR f.title ILIKE $${i}`
-        }
+        const likes = values.map((value, index) => index ? ` OR f.title ILIKE $${index + 1}` : "f.title ILIKE $1").join("")
 
         const query = `
         SELECT  f.film_id, f.title, f.description, f.release_year, f.rating, 
@@ -107,10 +105,7 @@ class Database {
         WHERE
             ${likes}
         `
-
-        // console.log(likes)
-        // console.log('values: ', values)
-
+        
         return await this.execute(query, values)
     }
 
@@ -179,19 +174,15 @@ class Database {
 
 
     async updateMovie(data) {
-        const updateData = data.changedVals  // List of columnName/value pairs
+        const updateData = data.changedVals  // List of name/value pairs
 
-        const values = []                    // Values to pass with the query
-        values.push(updateData[0][1])
+        // Values to pass with the query
+        const values = updateData.map(([ , value]) => value)
 
-        // Create a 'SET' string for the update query
-        let colSet = `SET ${updateData[0][0]} = $1`
+        // Create a 'SET" statement for use in the query.
+        const colSet = updateData.map(([name], index) => index ? `, ${name} = $${index+1}` : `SET ${name} = $1`).join("")
 
-        for (let i=1; i<updateData.length; ++i) {
-            colSet += `, ${updateData[i][0]} = $${i+1}`
-            values.push(updateData[i][1])
-        }
-
+        // Include movie id with values
         values.push(data.film_id)
 
         const query = `
