@@ -1,17 +1,14 @@
-
-
-
+// Component displays partial movie information in a table.
+// It has buttons for a Details popup box and an Edit box.
+// These buttons are enabled after selecting a movie in the table.
 
 import './css/searchResults.css'
 
 const SearchResults = ({ movies, selectedMovieId, setSelectedMovieId, setShowDetails, setShowEdit }) => {
 
-
     const selectRow = (e) => {
         const selectedId = e.target.parentElement.id 
         setSelectedMovieId(selectedId)
-        // console.log(e.target.parentElement.id)
-        // alert(selectedId)
     }
 
     const showDetailsBox = () => {

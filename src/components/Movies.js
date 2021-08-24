@@ -1,13 +1,13 @@
+// Component for showing and editing data about all the 
+// movies within the database.
 
 import { useState, useEffect } from 'react'
-import SearchMovies from './SearchMovies';
-import SearchResults from './SearchResults';
-import DragBox from './DragBox';
-import Details from './Details';
-import Edit from './Edit';
+import SearchMovies from './SearchMovies'
+import SearchResults from './SearchResults'
+import DragBox from './DragBox'
+import Details from './Details'
+import Edit from './Edit'
 import './css/movies.css'
-
-
 
 
 const Movies = () => {
@@ -23,18 +23,20 @@ const Movies = () => {
     // when the Edit-box updates the database. The following shuts ESlint up.
     if (updated === false) {}  
 
+
     const closeDetailsBox = () => {
         setShowDetails(false)
     }
+
 
     const closeEditBox = () => {
         setShowEdit(false)
     }
 
+
     useEffect(() => {
         const tmpMovie = movies.find((movie) => movie.film_id.toString() === selectedMovieId)
         const movie = ( tmpMovie === undefined ) ? {} : tmpMovie
-        console.log(movie)
         setSelectedMovie(movie)
     }, [movies, selectedMovieId])
 

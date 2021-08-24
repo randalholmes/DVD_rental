@@ -1,12 +1,10 @@
-// A server for handling database calls from DVD-Rental App
-
+// A server for handling database API calls from DVD-Rental App
 
 import DataBase from './Database.js'
 import express from 'express'
 
 
-
-// setup database connection
+// Setup database connection
 const db = new DataBase()
 
 try {
@@ -28,7 +26,6 @@ process.on('SIGTERM', shutdown)
 process.on('SIGINT', shutdown)
 
 
-
 // Just a little test to see if things are working on startup.
 ;(async () => {
     try {
@@ -41,8 +38,6 @@ process.on('SIGINT', shutdown)
 
 
 
-
-   
 // Setup server
 const app = express();
 const port = 4000;
@@ -83,10 +78,11 @@ app.get('/api/actor/all', async (req, res) => {
     res.send(actors)
 });
 
+
+
 // Setup POST Routes  //
 
 app.post('/api/movies', async (req, res) => {
-    console.log("Sent Data: ", req.body)
     const movie = await db.updateMovie(req.body)
     res.json(movie[0])
 });

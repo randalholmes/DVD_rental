@@ -1,6 +1,6 @@
 // Class for running queries on postgres DVD database
 
-import pkg from 'pg'   // note: pkg could be any name
+import pkg from 'pg'   
 const { Pool } = pkg
 
 class Database {
@@ -8,7 +8,7 @@ class Database {
         this.pool = null;
     }
 
-    // Create a connection pool with the database
+    // Create a connection pool with the database.
     connect() {
         try {
             this.pool = new Pool({
@@ -20,7 +20,7 @@ class Database {
             });
 
             // the pool will emit an error on behalf of any idle clients
-            // it contains if a backend error or network partition happens
+            // it contains if a backend error or network partition happens.
             this.pool.on('error', (err, client) => {
                 console.error('Unexpected error on idle client', err)
                 process.exit(-1)
@@ -42,6 +42,8 @@ class Database {
     }
 
 
+    // Single access point for executing database queries.
+    // Eliminates redundant code.
     async execute(text, values=[]) {
         try {
             const client = await this.pool.connect()
@@ -78,6 +80,7 @@ class Database {
 
         return await this.execute(query, value);
     }
+
 
     async getMoviesTitle({ title }) {
         // Create list of single words with no white space and percent signs to indicate zero or more characters.
@@ -200,8 +203,6 @@ class Database {
 
         RETURNING * 
         `
-        console.log("query: ", query)
-
         return this.execute(query, values)
     }
 

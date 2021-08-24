@@ -1,3 +1,4 @@
+// Component for displaying detailed information about a Movie
 
 import './css/details.css'
 

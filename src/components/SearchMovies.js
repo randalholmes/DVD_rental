@@ -1,3 +1,5 @@
+// Component for searching the database for movies based on
+// title, category, or actor. Searches are mutually exclusive.
 
 import { useState, useEffect} from 'react'
 import './css/searchMovies.css'
@@ -7,7 +9,7 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
     const [categories, setCategories] = useState([])
     const [actors, setActors] = useState([])
 
-    // Get Categories
+    // Get Categories for category selection box
     useEffect(() => {
         async function getCategories() {
             const res = await fetch('/api/category/all')
@@ -19,7 +21,7 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
     }, [])
 
 
-    // Get Actors
+    // Get Actors for actor selection box
     useEffect(() => {
         async function getActors() {
             const res = await fetch('/api/actor/all')
@@ -31,6 +33,7 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
     }, [])
 
 
+    // Determine API endpoint based off search item
     const getUrl = ([ title, category, actor ], index) => { 
 
         switch (index) {
@@ -58,18 +61,21 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
     }
 
 
+    // Submit button handler
     const onSubmit = (e, index) => {
+        // Create array of input elements' values.
         const form = document.querySelector(".movies-search-form")
         const searchList = Array.from(form).filter(elm => elm.type !== 'button').map(({ value }) => value.trim() ? value : 'null')
 
+        // Get appropriate API endpoint.
         const url = getUrl(searchList, index)
         if (url === 'null') return
 
+        // Retrieve list of movie objects that match search criteria.
         async function getMovies() {
             try {
                 const res = await fetch(url)
                 const data =  await res.json()
-                console.log(data)
                 setMovies(data)
                 setSelectedMovieId(0) 
             } catch (err) {
@@ -80,7 +86,6 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
  
         getMovies()
     }
-
 
 
     return (
