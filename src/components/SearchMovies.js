@@ -85,7 +85,7 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
 
     // Submit button handler
     const onSubmit = (e, index) => {
-        // Create array of input elements' values.
+        // Create array of input element values.
         const form = document.querySelector(".movies-search-form")
         const searchList = Array.from(form).filter(elm => elm.type !== 'button').map(({ value }) => value.trim() ? value : 'null')
 
