@@ -98,6 +98,15 @@ app.get('/api/actor/all', async (req, res) => {
     }
 });
 
+app.get('/api/ratings', async (req, res) => {
+    try {
+        const ratings = await db.getAllRatings()
+        res.send(ratings)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
+})
+
 
 
 // Setup POST Routes  //

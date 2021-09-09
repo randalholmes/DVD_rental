@@ -87,7 +87,8 @@ class Database {
         // with percent signs to indicate zero or more characters.
         const values = title.split(' ').filter(str => str !== '').map(str => `%${str.trim()}%`)
 
-        // Create 'ILIKE' comparison strings for each word in values
+        // Create 'ILIKE' comparison strings for each word in values.
+        // Used in 'WHERE' clause in query below.
         const likes = values.map((value, index) => index ? ` OR f.title ILIKE $${index + 1}` : "f.title ILIKE $1").join("")
 
         const query = `
@@ -169,6 +170,15 @@ class Database {
 
     async getAllActors() {
         const query = 'SELECT actor_id, first_name, last_name FROM actor'
+        return this.execute(query)
+    }
+
+    async getAllRatings() {
+        const query = `
+        SELECT 
+            DISTINCT rating
+        FROM film` 
+
         return this.execute(query)
     }
 

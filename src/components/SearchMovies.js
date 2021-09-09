@@ -89,7 +89,6 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
         const form = document.querySelector(".movies-search-form")
         const searchList = Array.from(form).filter(elm => elm.type !== 'button').map(({ value }) => value.trim() ? value : 'null')
 
-        //const searchList = ["bob", "Sam", "blow"]
         // Get appropriate API endpoint.
         const url = getUrl(searchList, index)
         if (url === 'null') return
@@ -100,7 +99,6 @@ const SearchMovies = ({ setMovies, setSelectedMovieId }) => {
                 const res = await fetch(url)
                 const data =  await res.json()
 
-                // console.log({res})
                 if (res.ok) {
                     setMovies(data)
                     setSelectedMovieId(0) 

@@ -2,8 +2,33 @@
 // submitting the changes to the database.
 
 import './css/edit.css'
+import { useState, useEffect } from 'react'
 
 const Edit = ({ movie, setUpdated }) => {
+
+    const [ratings, setRatings] = useState([])
+
+    useEffect(() => {
+        const getRatings = async () => {
+            try {
+                const res = await fetch('/api/ratings')
+                const data = await res.json()
+                
+                if (res.ok) {
+                    const ratings = data.map(({ rating }) => rating)
+                    setRatings(ratings)
+                } else {    
+                    throw new Error(data.cause)
+                }
+
+            } catch(err) {
+                console.log("Database Error: ", err.message)
+            }
+        }
+
+        getRatings()
+    }, [])
+
 
     // Clear the message box when the form is clicked anywhere but the submit button.
     const formClick = (e) => {
@@ -87,7 +112,13 @@ const Edit = ({ movie, setUpdated }) => {
             </div>
             <div>
                 <label htmlFor="rating">Rating:</label>
-                <input type="text" defaultValue={movie.rating} id="rating"  name="rating" />
+                <select name="rating" id="rating" defaultValue={movie.rating}>
+                    {ratings.map((rating, index) => 
+                        (rating === movie.rating) ? 
+                        <option value={rating}  key={index} selected>{rating}</option>
+                        : <option value={rating} key={index}>{rating} </option>
+                    )}
+                </select>
             </div>
        </form>
     )
