@@ -1,0 +1,13 @@
+
+.link {
+    background-color: grey;
+    border: 2px solid black;
+    margin: 5px;
+    padding: 5px;
+} 
+
+a {
+    font-style:normal;
+    color: darkred;
+    padding-top: 6px;
+}

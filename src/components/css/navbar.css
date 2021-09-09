@@ -1,0 +1,11 @@
+
+.NavBar {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr 2fr; */
+    
+}
+
+.NavBar span {
+    text-align: right;
+    padding-top: 8px;
+}
