@@ -207,6 +207,12 @@ class Database {
         return this.execute(query, values)
     }
 
+    
+    async getStoreIds() {
+        const query = 'SELECT store_id FROM store'
+        return this.execute(query)
+    }
+
 }
 
 export default Database

@@ -8,7 +8,7 @@ import {
 
 
 import Movies from './components/Movies'
-import Store from './components/Store'
+import Stores from './components/Stores'
 import NavBar from './components/NavBar'
 
 import './App.css';
@@ -19,7 +19,7 @@ function App() {
 
   const PageRoutes = [
     {linkTo:"/movies", title:"Movies"},
-    {linkTo:"/store", title:"Store"}
+    {linkTo:"/stores", title:"Stores"}
   ]
 
 
@@ -31,8 +31,8 @@ function App() {
         </header>
 
         <Switch>
-          <Route exact path='/store'>
-            <Store />
+          <Route exact path='/stores'>
+            <Stores />
           </Route>
 
           <Route path='/'>

@@ -108,6 +108,16 @@ app.get('/api/ratings', async (req, res) => {
 })
 
 
+app.get('/api/stores/ids', async (req, res) => {
+    try {
+        const ids = await db.getStoreIds()
+        res.send(ids)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
+})
+
+
 
 // Setup POST Routes  //
 

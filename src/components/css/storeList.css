@@ -1,0 +1,16 @@
+
+
+.store-list {
+    border: 2px solid black;
+    padding-right: 30px;
+    height: 80px;
+}
+
+.store-list li {
+    margin: 10px;
+}
+
+.store-list li:hover {
+    color: mediumvioletred;
+    cursor: pointer;
+}
