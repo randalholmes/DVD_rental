@@ -1,5 +1,8 @@
 
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../state/actionCreators/actionCreators'
 
 
 import './css/storeList.css'
@@ -7,8 +10,15 @@ import './css/storeList.css'
 
 const StoreList = () => {
 
+    const curId = useSelector(state => state.curId)
+    const dispatch = useDispatch()
+    const { selectStore } = bindActionCreators(actionCreators, dispatch)
 
-    const [ storeIds, setStoreIds] = useState([1, 2])
+
+    console.log("curId at start", curId)
+    console.log("selectStore: ", selectStore)
+
+    const [ storeIds, setStoreIds] = useState([])
 
     useEffect(() => {
          const getStoreIds = async () => {
@@ -16,7 +26,6 @@ const StoreList = () => {
                 const res = await fetch('/api/stores/ids')
                 const data = await res.json()
 
-                console.log(data.map( ({store_id: id}) => id ))
                 if (res.ok) {
                     setStoreIds(data.map( ({store_id: id}) => id ))
                 } else {
@@ -31,11 +40,17 @@ const StoreList = () => {
          getStoreIds();
     }, [])
 
+    
+    const onStoreClick = (id) => {
+        selectStore(id)
+        console.log("Current Store id: ", curId)
+    }
+
 
     return (
         <div className='store-list'>
             <ul>
-                {storeIds.map( id => <li key={id} >{`Store ${id}`}</li>)}
+                {storeIds.map( id => <li key={id} onClick={() => onStoreClick(id)}>{`Store ${id}`}</li>)}
             </ul>
         </div>
     )
