@@ -2,7 +2,7 @@
 // It has buttons for a Details popup box and an Edit box.
 // These buttons are enabled after selecting a movie in the table.
 
-import './css/searchResults.css'
+import './css/scrollBox.css'
 
 const SearchResults = ({ movies, selectedMovieId, setSelectedMovieId, setShowDetails, setShowEdit }) => {
 
@@ -23,7 +23,7 @@ const SearchResults = ({ movies, selectedMovieId, setSelectedMovieId, setShowDet
     const columnTitles = ['Title', 'Rating', 'Description']
 
     return (    
-        <div className='search_results'>
+        <div className='scroll-box'>
             <div>
                 <h2>Search Results</h2>
                 {selectedMovieId ? <button onClick={showDetailsBox} >View Details</button> : <button disabled >View Details</button>}

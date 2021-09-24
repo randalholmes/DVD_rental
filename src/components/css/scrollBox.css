@@ -1,11 +1,11 @@
 
 
-.search_results {
+.scroll-box {
     border: 2px solid black;
     margin-left: 12px;
 }
 
-.search_results span {
+.scroll-box span {
     margin-left: 10px;
 }
 
