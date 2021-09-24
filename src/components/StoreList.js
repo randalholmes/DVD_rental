@@ -1,24 +1,19 @@
 
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as actionCreators from '../state/actionCreators/actionCreators'
-
+import { selectStore } from '../state/actionCreators/actionCreators'
 
 import './css/storeList.css'
 
 
 const StoreList = () => {
+    const st = useSelector( state => state)
+    console.log("state: ", st)
 
-    const curId = useSelector(state => state.curId)
-    const dispatch = useDispatch()
-    const { selectStore } = bindActionCreators(actionCreators, dispatch)
-
-
-    console.log("curId at start", curId)
-    console.log("selectStore: ", selectStore)
-
+    const { curStoreId } = useSelector(state => state)
     const [ storeIds, setStoreIds] = useState([])
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
          const getStoreIds = async () => {
@@ -42,11 +37,11 @@ const StoreList = () => {
 
     
     const onStoreClick = (id) => {
-        selectStore(id)
-        console.log("Current Store id: ", curId)
+        dispatch(selectStore(id))
+        console.log("Last Store id: ", curStoreId)
     }
 
-
+    
     return (
         <div className='store-list'>
             <ul>

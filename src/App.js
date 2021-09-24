@@ -6,6 +6,9 @@ import {
   Route
 } from "react-router-dom";
 
+import { Provider } from "react-redux";
+import dataStore from "./state/dataStore";
+
 
 import Movies from './components/Movies'
 import Stores from './components/Stores'
@@ -24,25 +27,27 @@ function App() {
 
 
   return (
-    <Router>
-      <div className="App">
-        <header>        
-          <NavBar links={PageRoutes} message='Here is a message for you' />
-        </header>
+    <Provider store={dataStore}>
+      <Router>
+        <div className="App">
+          <header>        
+            <NavBar links={PageRoutes} message='Here is a message for you' />
+          </header>
 
-        <Switch>
-          <Route exact path='/stores'>
-            <Stores />
-          </Route>
+          <Switch>
+            <Route exact path='/stores'>
+              <Stores />
+            </Route>
 
-          <Route path='/'>
-            <Movies />
-          </Route>
-        </Switch>
+            <Route path='/'>
+              <Movies />
+            </Route>
+          </Switch>
 
-        <footer>The Footer</footer>
-      </div>
-    </Router>
+          <footer>The Footer</footer>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

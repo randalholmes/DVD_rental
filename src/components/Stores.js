@@ -1,17 +1,26 @@
 
 import StoreList from './StoreList'
-import { Provider } from 'react-redux'
-import dataStore from '../state/dataStore'
+import Customers from './Customers'
+// import { useDispatch } from 'react-redux'
+// import { bindActionCreators } from 'redux'
+// import * as actionCreators from '../state/actionCreators/actionCreators'
+
 
 import './css/stores.css'
 
 const Stores = () => {
+    // const dispatch = useDispatch()
+    // const { selectStore, changeCustomerList } = bindActionCreators(actionCreators, dispatch)
+
+    // console.log("action creators: ", actionCreators)
+
     return (
-        <Provider store={dataStore}>
-            <div className="stores">
-                <StoreList />
-            </div>
-        </Provider>
+
+        <div className="stores">
+            <StoreList />
+            <Customers />
+        </div>
+
     )
 }
 

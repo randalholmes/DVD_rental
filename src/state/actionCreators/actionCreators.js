@@ -8,3 +8,12 @@ export const selectStore = (id) => {
         })
     }
 }
+
+export const changeCustomerList = (customerList) => {
+    return (dispatch) => {
+        dispatch({
+            type: "newList",
+            payload: customerList
+        })
+    }
+}
