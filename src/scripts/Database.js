@@ -72,9 +72,9 @@ class Database {
     
     async getFilmInfo(id = 1) {
         const query = `
-        SELECT title, description 
-        FROM film
-        WHERE film_id < $1`;
+            SELECT title, description 
+            FROM film
+            WHERE film_id < $1`;
 
         const value = [id];
 
@@ -211,6 +211,19 @@ class Database {
     async getStoreIds() {
         const query = 'SELECT store_id FROM store'
         return this.execute(query)
+    }
+
+    async getCustomersAtStore({ id }) {
+        const query = `
+            SELECT first_name, last_name, customer_id 
+            FROM customer 
+            WHERE store_id = $1 
+            ORDER BY last_name, first_name
+        `
+
+        const values = [id]
+
+        return await this.execute(query, values)
     }
 
 }

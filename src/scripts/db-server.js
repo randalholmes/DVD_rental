@@ -118,6 +118,16 @@ app.get('/api/stores/ids', async (req, res) => {
 })
 
 
+app.get('/api/customers/stores/id/:id', async (req, res) => {
+    try {
+        const customers = await db.getCustomersAtStore(req.params)
+        res.send(customers)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
+})
+
+
 
 // Setup POST Routes  //
 

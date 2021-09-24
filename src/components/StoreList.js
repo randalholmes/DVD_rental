@@ -1,16 +1,12 @@
 
 import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { selectStore } from '../state/actionCreators/actionCreators'
 
 import './css/storeList.css'
 
 
 const StoreList = () => {
-    const st = useSelector( state => state)
-    console.log("state: ", st)
-
-    const { curStoreId } = useSelector(state => state)
     const [ storeIds, setStoreIds] = useState([])
 
     const dispatch = useDispatch()
@@ -38,7 +34,6 @@ const StoreList = () => {
     
     const onStoreClick = (id) => {
         dispatch(selectStore(id))
-        console.log("Last Store id: ", curStoreId)
     }
 
     

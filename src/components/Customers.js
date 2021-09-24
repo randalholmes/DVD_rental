@@ -6,25 +6,22 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeCustomerList } from '../state/actionCreators/actionCreators'
 
 const Customers = () => {
-
+    const { customerList, curStoreId } = useSelector( state => state)
     const dispatch = useDispatch()
 
-    const { customerList, curId } = useSelector( state => state)
-
     useEffect(() => {
-        if (curId === null) {
-      
+        if (curStoreId === null) {
             return
         }
 
         const getCustomers = async () => {
             try {
-                const res = await fetch(`./api/customers/id/${curId}`)
+                const res = await fetch(`./api/customers/stores/id/${curStoreId}`)
                 const data = await res.json()
 
                 if (res.ok) {
-                    console.log("customer names:", data)
-                    dispatch(changeCustomerList(["Howdy Duddy"]))
+                    const newCustomerList = data.map(({first_name: f, last_name: l, customer_id: id}) => [`${f} ${l}`, id])
+                    dispatch(changeCustomerList(newCustomerList))
                 } else {
                     throw new Error(data.cause)
                 }
@@ -36,7 +33,7 @@ const Customers = () => {
 
         getCustomers();
 
-    }, [curId, dispatch])
+    }, [curStoreId, dispatch])
 
 
     return (
@@ -53,8 +50,8 @@ const Customers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {customerList.map( (name, index) => 
-                        <tr key={index}><td>{name}</td></tr>
+                    {customerList.map( ([name, id]) => 
+                        <tr key={id}><td>{name}</td></tr>
                     )}
                 </tbody>
             </table>
