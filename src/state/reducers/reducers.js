@@ -1,11 +1,13 @@
 
 import { combineReducers } from "redux";
 import curIdReducer from "./curIdReducer";
-import customerList from "./customerListReducer";
+import customerListReducer from "./customerListReducer";
+import curCustomerIdReducer from "./curCustomerIdReducer";
 
 const reducers = combineReducers({
     curStoreId: curIdReducer,
-    customerList: customerList
+    customerList: customerListReducer,
+    curCustomerId: curCustomerIdReducer
 })
 
 export default reducers

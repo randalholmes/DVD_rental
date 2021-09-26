@@ -17,3 +17,12 @@ export const changeCustomerList = (customerList) => {
         })
     }
 }
+
+export const setCustomerId = (cusId) => {
+    return (dispatch) => {
+        dispatch({
+            type: "setCustId",
+            payload: cusId
+        })
+    }
+}
