@@ -41,6 +41,11 @@ th, td {
     background-color: cornflowerblue;
 }
 
+.selected-customer {
+    background-color: burlywood;
+}
+
+
 thead th {
     top: 0px;
     position: sticky;

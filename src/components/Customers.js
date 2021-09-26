@@ -12,6 +12,7 @@ const Customers = () => {
     const { customerList, curStoreId, curCustomerId } = useSelector( state => state)
     const dispatch = useDispatch()
 
+    // When a new store is selected, fetch the list of customers for that store
     useEffect(() => {
         if (curStoreId === null) {
             return
@@ -39,19 +40,26 @@ const Customers = () => {
     }, [curStoreId, dispatch])
 
 
+    // When a new customer list is loaded, the current customer id needs to be set to null.
+    useEffect(() => {
+        dispatch(setCustomerId(null))
+    }, [curStoreId, dispatch])
+
+
+    // Customer selection handler
     const onClickCustomer = cusId => {
         dispatch(setCustomerId(cusId))
     }
 
     console.log("customer id: ", curCustomerId)
 
-    
+
     return (
         <div className='scroll-box'>
             <div>
                 <h2>Customers</h2>
-                <button>Edit Customer</button>
-                <button>View Info</button>
+                {curCustomerId ? <button>Edit Customer</button>  : <button disabled>Edit Customer</button>}
+                {curCustomerId ? <button>View Info</button> : <button disabled>View Info</button>}
             </div>
             <div className="scroll_table">
                 <table>
@@ -62,7 +70,9 @@ const Customers = () => {
                     </thead>
                     <tbody>
                         {customerList.map( ([name, id]) => 
-                            <tr key={id}><td onClick={() => onClickCustomer(id)}>{name}</td></tr>
+                            <tr key={id} className={curCustomerId === id ? "selected-customer" : ""}>
+                                <td onClick={() => onClickCustomer(id)}>{name}</td>
+                            </tr>
                         )}
                     </tbody>
                 </table>
