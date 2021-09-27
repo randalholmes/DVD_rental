@@ -128,6 +128,16 @@ app.get('/api/customers/stores/id/:id', async (req, res) => {
 })
 
 
+app.get('/api/customer/id/:id', async (req, res) => {
+    try {
+        const customer = await db.getCustomer(req.params)
+        res.send(customer)
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }
+})
+
+
 
 // Setup POST Routes  //
 

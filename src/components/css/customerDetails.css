@@ -1,0 +1,13 @@
+
+.customer-details {
+    margin-left: 20px;
+    width: 400px;
+}
+
+.customer_addresses {
+    display: flex;
+}
+
+.customer_addresses div {
+    margin-left: 6px;
+}

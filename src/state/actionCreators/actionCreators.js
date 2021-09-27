@@ -1,5 +1,4 @@
 
-
 export const selectStore = (id) => {
     return (dispatch) => {
         dispatch({
@@ -23,6 +22,24 @@ export const setCustomerId = (cusId) => {
         dispatch({
             type: "setCustId",
             payload: cusId
+        })
+    }
+}
+
+export const setCustomer = (customer) => {
+    return (dispatch) => {
+        dispatch({
+            type: "updateCustomer",
+            payload: customer
+        })
+    }
+}
+
+export const clearCustomer = () => {
+    return (dispatch) => {
+        dispatch({
+            type: "clearCustomer",
+            payload: null
         })
     }
 }

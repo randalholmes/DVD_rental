@@ -226,6 +226,30 @@ class Database {
         return await this.execute(query, values)
     }
 
+
+    async getCustomer({ id }) {
+        const query = `
+            SELECT c.first_name, c.last_name, c.email, 
+                   a.address, a.district, a.postal_code, a.phone, 
+                   ci.city 
+
+
+            FROM customer c 
+
+            INNER JOIN address a 
+                ON c.address_id = a.address_id 
+
+            INNER JOIN city ci
+                ON a.city_id = ci.city_id
+
+            WHERE customer_id = $1 
+        `
+
+        const values = [id]
+
+        return await this.execute(query, values)
+    }
+
 }
 
 export default Database
