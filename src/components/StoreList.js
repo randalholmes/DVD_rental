@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectStore } from '../state/actionCreators/actionCreators'
 
 import './css/storeList.css'
@@ -8,7 +8,7 @@ import './css/storeList.css'
 
 const StoreList = () => {
     const [ storeIds, setStoreIds] = useState([])
-
+    const { curStoreId } = useSelector(state => state)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -40,7 +40,9 @@ const StoreList = () => {
     return (
         <div className='store-list'>
             <ul>
-                {storeIds.map( id => <li key={id} onClick={() => onStoreClick(id)}>{`Store ${id}`}</li>)}
+                {storeIds.map( id => <li key={id} 
+                onClick={() => onStoreClick(id)} 
+                className={curStoreId === id ? 'store-hilite' : ''}>{`Store ${id}`}</li>)} 
             </ul>
         </div>
     )
