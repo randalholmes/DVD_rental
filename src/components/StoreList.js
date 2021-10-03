@@ -1,3 +1,4 @@
+// Component that creates a list of Video Stores 
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

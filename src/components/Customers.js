@@ -26,6 +26,7 @@ const Customers = () => {
                 if (res.ok) {
                     const newCustomerList = data.map(({first_name: f, last_name: l, customer_id: id}) => [`${f} ${l}`, id])
                     dispatch(changeCustomerList(newCustomerList))
+                    dispatch(setCustomerId(null))
                 } else {
                     throw new Error(data.cause)
                 }
@@ -37,12 +38,6 @@ const Customers = () => {
 
         getCustomers();
 
-    }, [curStoreId, dispatch])
-
-
-    // When a new customer list is loaded, the current customer id needs to be set to null.
-    useEffect(() => {
-        dispatch(setCustomerId(null))
     }, [curStoreId, dispatch])
 
 

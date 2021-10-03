@@ -1,7 +1,7 @@
 
 const curCustomerIdReducer = (state=null, action) => {
     switch (action.type) {
-        case ("setCustId"):
+        case ("setCustomerId"):
             return action.payload
         default:
             return state

@@ -40,8 +40,9 @@ const Edit = ({ movie, setUpdated }) => {
     // Form submit-button handler
     const onSubmit = () => {
         // Create array of name/value pairs from the form input elements.
-        const form = document.querySelector(".movie-edit-form")
-        const formVals = Array.from(form).filter(elm => elm.type !== 'button').map(({ name, value }) => [name, value])
+        const formVals = Array.from(document.querySelector(".movie-edit-form"))
+                .filter(elm => elm.type !== 'button')
+                .map(({ name, value }) => [name, value])
         
         // Determine what values if any have changed
         const changedVals = formVals.filter( ([name, value]) => value !== movie[name])
@@ -54,9 +55,7 @@ const Edit = ({ movie, setUpdated }) => {
         }
 
         // Create value object to post to the database.
-        const newData = {}
-        newData.changedVals = changedVals
-        newData.film_id = movie.film_id
+        const newData = {changedVals, film_id: movie.film_id}
 
         // Post new values to the database.
         async function updateMovie() {

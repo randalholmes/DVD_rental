@@ -1,3 +1,4 @@
+// Top level component for the Video Stores screen.
 
 import StoreList from './StoreList'
 import Customers from './Customers'

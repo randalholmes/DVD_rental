@@ -141,6 +141,17 @@ app.get('/api/customer/id/:id', async (req, res) => {
 
 // Setup POST Routes  //
 
+app.post('/api/customer', async (req, res) => {
+    try {
+        const customer = await db.updateCustomer(req.body)
+        res.send(customer[0])
+    } catch(err) {
+        res.status(400).send({ cause: err.message })
+    }  
+});
+
+
+
 app.post('/api/movies', async (req, res) => {
     try {
         const movie = await db.updateMovie(req.body)

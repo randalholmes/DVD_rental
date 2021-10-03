@@ -1,9 +1,9 @@
+// Component for displaying information about a customer.
 
 import './css/customerDetails.css'
 
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from 'react'
-
 import { setCustomer, clearCustomer } from "../state/actionCreators/actionCreators"
 
 const CustomerDetails = () => {
@@ -11,6 +11,8 @@ const CustomerDetails = () => {
     const { customer: cus, curCustomerId: id } = useSelector(state => state)
     const dispatch = useDispatch()
 
+    // When the curCustomerId changes, retrieve data for the customer
+    // from the database.
     useEffect(() => {
         const getCustomerInfo = async () => {
             try {
@@ -60,19 +62,3 @@ const CustomerDetails = () => {
 }
 
 export default CustomerDetails 
-
-
-// return (
-//     <div className="customer-details">
-//         <div>
-//             <h2>Customer Details</h2>
-//             <hr />
-//             <p>{cus ? `Name: ${cus.first_name} ${cus.last_name}` : 'Name: '}</p>
-//             <p>{cus ? `Email: ${cus.email}` : 'Email:'}</p>
-//             <p>{cus ? `Phone: ${cus.phone}` : 'Phone:'}</p>
-//             <p>{cus ? `Address: ${cus.address}` : 'Address:'}</p>
-//             <p>{cus ? `${cus.district}, ${cus.city}, ${cus.postal_code}` : ''}</p>
-//         </div>
-//     </div>
-// )
-

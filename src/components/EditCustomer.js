@@ -1,4 +1,5 @@
 
+// Component for editing customer data and submitting it to the database.
 
 import './css/editCustomer.css'
 
@@ -10,13 +11,15 @@ const EditCustomer = () => {
     const { customer: cus, curCustomerId: id} = useSelector(state => state)
     const dispatch = useDispatch()
 
+    //* Temp code for debugging. Remove when component is complete.*
     useEffect(() => {
         id ? console.log("id changed") : console.log("Id null")
         
     }, [id, dispatch])
 
 
-
+    // Submits any changes to Customer data to the database.
+    // Updates Customer Redux store if database update is successful.
     const updateCustomer = async () => {
         const formData = Array.from(document.getElementsByClassName('input'))
             .map( elm => [elm.getAttribute('name'), elm.innerText])
@@ -36,10 +39,33 @@ const EditCustomer = () => {
 
         console.log("newData", newData)
 
+        const updateCustomer = async () => {
+            try {
+                const res = await fetch('/api/customer', 
+                    {
+                        method:'POST',
+                        headers: {
+                        'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify(newData)
+                    })
 
+                const data = await res.jason()
 
+                if (res.ok) {
+                    console.log("New Customer data: ", data[0])
+                    dispatch(setCustomer(data[0]))
+                } else {
+                    throw new Error(data.cause)
+                }
 
+            } catch (err) {
+                console.log(err.message)
+                alert("There was a server error updating the database.")
+            }
+        }
 
+        updateCustomer()
     }
 
 
@@ -49,6 +75,8 @@ const EditCustomer = () => {
     }
 
 
+    // Note: I use 'spans' in the form below instead of text inputs as an experiment. I was
+    // curious to see how well it would work.
     return (
         <div className='edit-customer' autoComplete='off'>
             <h2>Edit Customer Info</h2>

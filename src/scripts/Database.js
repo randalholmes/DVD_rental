@@ -182,31 +182,6 @@ class Database {
         return this.execute(query)
     }
 
-
-    async updateMovie(data) {
-        const updateData = data.changedVals  // List of name/value pairs
-
-        // Values to pass with the query
-        const values = updateData.map(([ , value]) => value)
-
-        // Create a 'SET' statement for use in the query.
-        const colSet = updateData.map(([name], index) => index ? `, ${name} = $${index+1}` : `SET ${name} = $1`).join("")
-
-        // Include movie id with values
-        values.push(data.film_id)
-
-        const query = `
-        UPDATE film
-
-        ${colSet}
-
-        WHERE film_id = $${updateData.length + 1}
-
-        RETURNING * 
-        `
-        return this.execute(query, values)
-    }
-
     
     async getStoreIds() {
         const query = 'SELECT store_id FROM store'
@@ -249,6 +224,34 @@ class Database {
 
         return await this.execute(query, values)
     }
+
+//****      DATABASE UPDATE METHODS         ****/
+
+
+    async updateMovie(data) {
+        const updateData = data.changedVals  // List of name/value pairs
+
+        // Values to pass with the query
+        const values = updateData.map(([ , value]) => value)
+
+        // Create a 'SET' statement for use in the query.
+        const colSet = updateData.map(([name], index) => index ? `, ${name} = $${index+1}` : `SET ${name} = $1`).join("")
+
+        // Include movie id with values
+        values.push(data.film_id)
+
+        const query = `
+        UPDATE film
+
+        ${colSet}
+
+        WHERE film_id = $${updateData.length + 1}
+
+        RETURNING * 
+        `
+        return this.execute(query, values)
+    }
+
 
 }
 
